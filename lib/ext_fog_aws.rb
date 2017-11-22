@@ -1,4 +1,4 @@
-require "ext_fog_aws/engine"
+require "ext_fog_aws/version"
 
 module ExtFogAws
   # Your code goes here...

@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.files = Dir["lib/**/*", "MIT-LICENSE", "README.md"]
 
   s.add_dependency "fog-aws", "~> 1.4"
+  s.add_dependency 'mime-types'
 end

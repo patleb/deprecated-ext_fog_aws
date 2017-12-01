@@ -7,7 +7,7 @@ module Fog
         model Fog::AWS::SES::Domain
 
         def all
-          data = service.list_identities('Type'=> 'Domain').body['Identities']
+          data = service.list_identities('Type'=> 'Domain').body['Identities'].map{ |name| { 'Domain' => name } }
           load(data)
         end
 

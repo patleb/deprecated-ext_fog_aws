@@ -1,11 +1,19 @@
 module Fog
+  module Parsers
+    module AWS
+      module SES
+        class DeleteIdentity < Fog::Parsers::Base
+          # https://docs.aws.amazon.com/ses/latest/APIReference/API_DeleteIdentity.html
+          def self.aws_schema
+            {}
+          end
+        end
+      end
+    end
+  end
   module AWS
     class SES
       class Real
-        require 'fog/aws/parsers/ses/delete_identity'
-
-        # https://docs.aws.amazon.com/ses/latest/APIReference/API_DeleteIdentity.html
-
         def delete_identity(name)
           request({
             'Action'       => 'DeleteIdentity',

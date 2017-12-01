@@ -1,11 +1,28 @@
 module Fog
+  module Parsers
+    module AWS
+      module IAM
+        class UploadSshPublicKey < Fog::Parsers::Base
+          # https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSSHPublicKey.html
+          def self.aws_schema
+            {
+              'SSHPublicKey' => {
+                'Fingerprint' => :string,
+                'SSHPublicKeyBody' => :string,
+                'SSHPublicKeyId' => :string,
+                'Status' => 'Active|Inactive',
+                'UploadDate' => :time,
+                'UserName' => :string,
+              }
+            }
+          end
+        end
+      end
+    end
+  end
   module AWS
     class IAM
       class Real
-        require 'fog/aws/parsers/iam/upload_ssh_public_key'
-
-        # https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSSHPublicKey.html
-
         def upload_ssh_public_key(public_key, username)
           request({
             'Action'              => 'UploadSSHPublicKey',

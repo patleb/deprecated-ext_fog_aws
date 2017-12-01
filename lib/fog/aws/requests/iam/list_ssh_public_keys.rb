@@ -1,11 +1,28 @@
 module Fog
+  module Parsers
+    module AWS
+      module IAM
+        class ListSshPublicKeys < Fog::Parsers::Base
+          # https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSSHPublicKeys.html
+          def self.aws_schema
+            {
+              'IsTruncated' => :boolean,
+              'Marker' => :string,
+              'SSHPublicKeys' => [{
+                'SSHPublicKeyId' => :string,
+                'Status' => 'Active|Inactive',
+                'UploadDate' => :time,
+                'UserName' => :string,
+              }]
+            }
+          end
+        end
+      end
+    end
+  end
   module AWS
     class IAM
       class Real
-        require 'fog/aws/parsers/iam/list_ssh_public_keys'
-
-        # https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSSHPublicKeys.html
-
         def list_ssh_public_keys(options = {})
           request({
             'Action'  => 'ListSSHPublicKeys',

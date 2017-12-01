@@ -1,11 +1,22 @@
 module Fog
+  module Parsers
+    module AWS
+      module SES
+        class ListIdentities < Fog::Parsers::Base
+          # https://docs.aws.amazon.com/ses/latest/APIReference/API_ListIdentities.html
+          def self.aws_schema
+            {
+              'Identities' => [:string],
+              'NextToken' => :string,
+            }
+          end
+        end
+      end
+    end
+  end
   module AWS
     class SES
       class Real
-        require 'fog/aws/parsers/ses/list_identities'
-
-        # https://docs.aws.amazon.com/ses/latest/APIReference/API_ListIdentities.html
-
         def list_identities(options = {})
           request({
             'Action'  => 'ListIdentities',

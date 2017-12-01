@@ -2,7 +2,7 @@ module Fog
   module Parsers
     module AWS
       module SES
-        class VerifyDomainDkim < Fog::Parsers::Base
+        class VerifyDomainDkim < Fog::Parsers::AWS::Base
           # https://docs.aws.amazon.com/ses/latest/APIReference/API_VerifyDomainDkim.html
           def self.aws_schema
             {

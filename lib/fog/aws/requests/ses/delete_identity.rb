@@ -2,7 +2,7 @@ module Fog
   module Parsers
     module AWS
       module SES
-        class DeleteIdentity < Fog::Parsers::Base
+        class DeleteIdentity < Fog::Parsers::AWS::Base
           # https://docs.aws.amazon.com/ses/latest/APIReference/API_DeleteIdentity.html
           def self.aws_schema
             {}

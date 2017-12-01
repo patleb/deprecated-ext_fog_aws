@@ -3,15 +3,15 @@ require 'fog/parsers/base'
 module Fog
   module Parsers
     Base.class_eval do
-      def self.aws_schema; end
+      def self.schema; end
+      def self.member; end
 
       module WithSchema
         def reset
           super
-          return unless (@schema = self.class.aws_schema)
+          return unless (@schema = self.class.schema)
 
-          @response['ResponseMetadata'] = {}
-          @stack = NodeStack.new(@response, @schema)
+          @stack = NodeStack.new(@response, @schema, self.class.member)
         end
 
         def start_element(name, attrs = [])
@@ -31,13 +31,13 @@ module Fog
           alias_method :top, :last
 
           def initialize(*args)
-            @response, @schema = args
+            @response, @schema, @member = args
             super()
           end
 
           def start_element(name)
             if top
-              if name == 'member'
+              if name == @member
                 push top.new_member
               elsif top.next_schema.has_key? name
                 push new_node(name, top.next_schema, top.next_result)
@@ -49,12 +49,10 @@ module Fog
 
           def end_element(name, value)
             if top
-              if name == 'member' || name == top.name
+              if name == @member || name == top.name
                 top.update_result(value)
                 pop
               end
-            elsif name == 'RequestId'
-              @response['ResponseMetadata'][name] = value
             end
           end
 

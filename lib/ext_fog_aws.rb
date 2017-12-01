@@ -3,6 +3,7 @@ require "ext_fog_aws/version"
 require 'fog/aws'
 require 'ext/fog/core/service'
 require 'ext/fog/parsers/base'
+require 'ext/fog/parsers/aws/base'
 require 'ext/fog/aws/iam'
 require 'ext/fog/aws/ses'
 

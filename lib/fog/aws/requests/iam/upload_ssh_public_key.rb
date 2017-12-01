@@ -2,7 +2,7 @@ module Fog
   module Parsers
     module AWS
       module IAM
-        class UploadSshPublicKey < Fog::Parsers::Base
+        class UploadSshPublicKey < Fog::Parsers::AWS::Base
           # https://docs.aws.amazon.com/IAM/latest/APIReference/API_UploadSSHPublicKey.html
           def self.aws_schema
             {

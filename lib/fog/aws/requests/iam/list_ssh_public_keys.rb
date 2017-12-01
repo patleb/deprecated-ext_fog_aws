@@ -2,7 +2,7 @@ module Fog
   module Parsers
     module AWS
       module IAM
-        class ListSshPublicKeys < Fog::Parsers::Base
+        class ListSshPublicKeys < Fog::Parsers::AWS::Base
           # https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListSSHPublicKeys.html
           def self.aws_schema
             {

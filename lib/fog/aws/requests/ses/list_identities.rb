@@ -2,7 +2,7 @@ module Fog
   module Parsers
     module AWS
       module SES
-        class ListIdentities < Fog::Parsers::Base
+        class ListIdentities < Fog::Parsers::AWS::Base
           # https://docs.aws.amazon.com/ses/latest/APIReference/API_ListIdentities.html
           def self.aws_schema
             {

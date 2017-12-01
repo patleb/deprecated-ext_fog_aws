@@ -14,8 +14,8 @@ module Fog
           {}
         end
 
-        def self.member
-          'member'
+        def self.arrays
+          ["member"]
         end
 
         def reset

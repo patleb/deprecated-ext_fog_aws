@@ -3,9 +3,7 @@ require 'fog/parsers/base'
 module Fog
   module Parsers
     Base.class_eval do
-      def self.aws_schema
-        nil
-      end
+      def self.aws_schema; end
 
       module WithSchema
         def reset
@@ -13,65 +11,50 @@ module Fog
           return unless (@schema = self.class.aws_schema)
 
           @response['ResponseMetadata'] = {}
-          @nodes = NodeList.new(@response, @schema)
+          @stack = NodeStack.new(@response, @schema)
         end
 
         def start_element(name, attrs = [])
           super
           return unless @schema
 
-          @nodes.start_element name
+          @stack.start_element name
         end
 
         def end_element(name)
           return super unless @schema
 
-          @nodes.end_element name, value
+          @stack.end_element name, value
         end
 
-        class NodeList < Array
+        class NodeStack < Array
+          alias_method :top, :last
+
           def initialize(*args)
             @response, @schema = args
             super()
           end
 
-          def root?
-            empty?
-          end
-
-          def child_node?(name)
-            current_node.next_schema.has_key? name
-          end
-
-          def current_node
-            last
-          end
-
           def start_element(name)
-            if root?
-              if @schema.has_key? name
-                self << new_node(name, @schema, @response)
-              end
-            elsif current_node
+            if top
               if name == 'member'
-                self << current_node.new_member
-              elsif child_node? name
-                self << new_node(name, current_node.next_schema, current_node.next_result)
+                push top.new_member
+              elsif top.next_schema.has_key? name
+                push new_node(name, top.next_schema, top.next_result)
               end
+            elsif @schema.has_key? name
+              push new_node(name, @schema, @response)
             end
           end
 
           def end_element(name, value)
-            if name == 'RequestId'
-              @response['ResponseMetadata'][name] = value
-            elsif current_node
-              if name == 'member'
-                current_node.update_result(value)
-                pop
-              elsif current_node.name == name
-                current_node.update_result(value)
+            if top
+              if name == 'member' || name == top.name
+                top.update_result(value)
                 pop
               end
+            elsif name == 'RequestId'
+              @response['ResponseMetadata'][name] = value
             end
           end
 

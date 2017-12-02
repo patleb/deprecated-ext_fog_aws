@@ -149,6 +149,10 @@ module Fog
             value == "true"
           when :time
             Time.parse(value)
+          when :integer
+            value.to_i
+          when :float
+            value.to_f
           else
             value
           end

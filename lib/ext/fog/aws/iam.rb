@@ -1,3 +1,5 @@
+require 'fog/aws/iam'
+
 module Fog
   module AWS
     IAM.class_eval do

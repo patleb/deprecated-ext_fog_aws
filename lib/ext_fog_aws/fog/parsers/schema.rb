@@ -88,7 +88,7 @@ module Fog
       end
 
       class NodeHash < Node
-        def initialize(*_)
+        def initialize(*)
           super
           if @index
             @result_pointer[name][@index] = {}
@@ -160,7 +160,7 @@ module Fog
       end
 
       class NodeArray < Node
-        def initialize(*_)
+        def initialize(*)
           super
           @count = 0
           @result_pointer[name] = []

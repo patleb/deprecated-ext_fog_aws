@@ -1,5 +1,5 @@
 require 'fog/parsers/base'
-require 'ext/fog/parsers/schema'
+require 'ext_fog_aws/fog/parsers/schema'
 
 module Fog
   module Parsers

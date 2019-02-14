@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require './spec/gems/ext_fog_aws/spec_helper'
+require './test/spec_helper'
+require 'ext_fog_aws'
 
 module Fog
   module Parsers
@@ -47,7 +48,7 @@ module Fog
       end
 
       describe_for RequestIdOnly do
-        it { subject.perform_test.must_equal subject.expected_output }
+        it { assert_equal subject.expected_output, subject.perform_test }
       end
 
       class With1NodeOf4Values < ParserWrapper
@@ -96,7 +97,7 @@ module Fog
       end
 
       describe_for With1NodeOf4Values do
-        it { subject.perform_test.must_equal subject.expected_output }
+        it { assert_equal subject.expected_output, subject.perform_test }
       end
 
       class With1NodeOf1ArrayOf3Values < ParserWrapper
@@ -138,7 +139,7 @@ module Fog
       end
 
       describe_for With1NodeOf1ArrayOf3Values do
-        it { subject.perform_test.must_equal subject.expected_output }
+        it { assert_equal subject.expected_output, subject.perform_test }
       end
 
       class With1NodeOf1ArrayOf2NodesOf1ValueAnd1Value < ParserWrapper
@@ -187,7 +188,7 @@ module Fog
       end
 
       describe_for With1NodeOf1ArrayOf2NodesOf1ValueAnd1Value do
-        it { subject.perform_test.must_equal subject.expected_output }
+        it { assert_equal subject.expected_output, subject.perform_test }
       end
 
       class DescribeActiveReceiptRuleSet < ParserWrapper
@@ -355,7 +356,7 @@ module Fog
       end
 
       describe_for DescribeActiveReceiptRuleSet do
-        it { subject.perform_test.must_equal subject.expected_output }
+        it { assert_equal subject.expected_output, subject.perform_test }
       end
     end
   end
